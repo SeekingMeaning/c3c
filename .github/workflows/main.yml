@@ -9,14 +9,13 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        cc: [ gcc, clang ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - name: (Linux) Download LLVM
-        run: sudo apt-get install llvm
-      - uses: docker://lpenz/ghaction-cmake:latest
-        with:
-          cc: ${{ matrix.cc }}
+        run: sudo apt-get install llvm-10-dev
+      - name: Build
+        run: |
+          mkdir build && cd build
+          cmake -DLLVM_DIR=/usr/lib/llvm-10/cmake -DCMAKE_BUILD_TYPE=Debug ..
+          cmake --build .
