@@ -390,7 +390,7 @@ static inline bool sema_expr_analyse_subscript_after_parent_resolution(Context *
 							bigint_to_error_string(&index->const_expr.i, 10), type->array.len - 1);
 					return false;
 				}
-				// fallthrough
+				/* fall through */
 			}
 			case TYPE_VARARRAY:
 			case TYPE_SUBARRAY:
@@ -2175,6 +2175,7 @@ static inline bool sema_expr_analyse_unary(Context *context, Type *to, Expr *exp
 		case UNARYOP_ERROR:
 			return false;
 	}
+	UNREACHABLE
 }
 
 static inline bool sema_expr_analyse_post_unary(Context *context, Type *to, Expr *expr)
@@ -2521,7 +2522,7 @@ static Ast *ast_copy_from_macro(Context *context, Expr *macro, Ast *source)
 			AST_COPY(ast->scoped_stmt.stmt);
 			return ast;
 	}
-
+	UNREACHABLE;
 #undef EXPR_COPY
 #undef AST_COPY
 }
