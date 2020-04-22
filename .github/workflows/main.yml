@@ -17,7 +17,10 @@ jobs:
         cc: [ gcc, clang ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+      - name: (Linux) Download LLVM
+          run: |
+            sudo apt-get install llvm
       - uses: docker://lpenz/ghaction-cmake:latest
         with:
           cc: ${{ matrix.cc }}
