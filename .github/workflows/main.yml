@@ -10,31 +10,14 @@ on:
   pull_request:
     branches: [ master ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    strategy:
+      matrix:
+        cc: [ gcc, clang ]
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Build & Test
-          uses: ashutoshvarma/action-cmake-build@master
-          with:
-            build-dir: ${{ runner.workspace }}/build
-            # will set the CC & CXX for cmake
-            cc: gcc
-            cxx: g++
-            build-type: Release
-            # Extra options pass to cmake while configuring project
-            configure-options: -DCMAKE_C_FLAGS=-w32 -DPNG_INCLUDE=OFF
-            run-test: true
-            ctest-options: -R mytest
-            # install the build using cmake --install
-            install-build: true
-            # run build using '-j [parallel]' to use multiple threads to build
-            parallel: 14
+      - uses: actions/checkout@master
+      - uses: docker://lpenz/ghaction-cmake:latest
+        with:
+          cc: ${{ matrix.cc }}
