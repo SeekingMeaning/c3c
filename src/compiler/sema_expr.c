@@ -390,7 +390,7 @@ static inline bool sema_expr_analyse_subscript_after_parent_resolution(Context *
 							bigint_to_error_string(&index->const_expr.i, 10), type->array.len - 1);
 					return false;
 				}
-				/* fall through */
+				FALLTHROUGH;
 			}
 			case TYPE_VARARRAY:
 			case TYPE_SUBARRAY:
@@ -648,7 +648,7 @@ static bool expr_check_index_in_range(Type *type, Expr *index)
 					           bigint_to_error_string(&index->const_expr.i, 10), type->array.len - 1);
 					return false;
 				}
-				// fall through
+				/* fall through */
 			}
 			case TYPE_VARARRAY:
 			case TYPE_SUBARRAY:
